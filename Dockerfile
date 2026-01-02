@@ -1,8 +1,8 @@
 # https://hub.docker.com/r/hexpm/elixir/tags
 ARG ELIXIR_IMG=hexpm/elixir
 ARG ELIXIR_VER=1.17.3
-ARG ERLANG_VER=26.2.5.13
-ARG ALPINE_VER=3.22.0
+ARG ERLANG_VER=26.2.5.12
+ARG ALPINE_VER=3.21.3
 
 FROM ${ELIXIR_IMG}:${ELIXIR_VER}-erlang-${ERLANG_VER}-alpine-${ALPINE_VER} as build
 
