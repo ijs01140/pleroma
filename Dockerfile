@@ -13,6 +13,10 @@ ENV VIX_COMPILATION_MODE=PLATFORM_PROVIDED_LIBVIPS
 
 RUN apk add git gcc g++ musl-dev make cmake file-dev vips-dev &&\
 	echo "import Config" > config/prod.secret.exs &&\
+	if [ "$(uname -m)" = "x86_64" ]; then \
+		export CFLAGS="-mno-avx512f -fPIC" && \
+		export CXXFLAGS="-mno-avx512f -fPIC"; \
+	fi && \
 	mix local.hex --force &&\
 	mix local.rebar --force &&\
   mix deps.clean --all &&\
