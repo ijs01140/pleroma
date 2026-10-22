@@ -10,11 +10,13 @@ COPY . .
 
 ENV MIX_ENV=prod
 ENV VIX_COMPILATION_MODE=PLATFORM_PROVIDED_LIBVIPS
-ENV CFLAGS="-mno-avx512f -fPIC"
-ENV CXXFLAGS="-mno-avx512f -fPIC"
 
 RUN apk add git gcc g++ musl-dev make cmake file-dev vips-dev &&\
 	echo "import Config" > config/prod.secret.exs &&\
+	if [ "$(uname -m)" = "x86_64" ]; then \
+		export CFLAGS="-mno-avx512f -fPIC" && \
+		export CXXFLAGS="-mno-avx512f -fPIC"; \
+	fi && \
 	mix local.hex --force &&\
 	mix local.rebar --force &&\
   mix deps.clean --all &&\
